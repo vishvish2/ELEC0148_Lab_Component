@@ -44,21 +44,38 @@ solar_cell_area = 0.045     # Units cm^2
 n_colours = 12
 cmap = plt.cm.get_cmap('tab20')  # 20 distinct colors for plotting
 
+fig, ax = plt.subplots()
+
 for key, value in intensity_cols.items():
     colour = cmap((key / 4) / n_colours)
 
-    # Voltages
+    # Voltage values in Volts (V)
     voltage_vals = pd.to_numeric(df.iloc[:, key][1:])
 
-    # Convert to mA
+    # Current values converted from amps (A) to milliamps (mA)
     current_vals = pd.to_numeric(df.iloc[:, (key + 1)][1:]) * 1000
 
     # Compute J
     current_density_vals = current_vals / solar_cell_area   # Units mA cm^-2
     plt.plot(voltage_vals, current_density_vals, color=colour, label=value)
 
-plt.xlabel("Voltage / V")
-plt.ylabel("Current Density / mAcm$^{-2}$")
-plt.title("JV curve of Light Intensities of a Perovskite Solar Cell")
-plt.legend()
+# Center the x-axis and y-axis
+ax.spines['bottom'].set_position('zero')  # x-axis at y = 0
+ax.spines['left'].set_position('zero')    # y-axis at x = 0
+
+# Ticks only on bottom and left
+ax.xaxis.set_ticks_position('bottom')
+ax.yaxis.set_ticks_position('left')
+
+# Move labels to ends
+ax.xaxis.set_label_coords(0, 0)
+ax.yaxis.set_label_coords(0, 0)
+
+# Labelling the plot
+plt.xlabel("Voltage / V", fontsize=16)
+plt.ylabel("Current Density / mAcm$^{-2}$", fontsize=16)
+plt.title(
+    "JV curve of Light Intensities of a Perovskite Solar Cell", fontsize=18
+    )
+plt.legend(fontsize=16)
 plt.show()
