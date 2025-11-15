@@ -8,7 +8,7 @@ def read_csv_exception(csv_file_path):
     """Convert a csv file to a pandas dataframe with exception handling
 
         Args:
-            df_file_path (pathlib.PosixPath): file path to csv file
+            df_file_path (str): file path to csv file
 
         Returns:
             df (DataFrame): pandas dataframe
@@ -24,7 +24,7 @@ def read_csv_exception(csv_file_path):
 # Pandas dataframe for the csv file data
 df = read_csv_exception("CSV Data File.csv")
 
-# Columns in the dataframe that represent the different light intensities
+# Column indexes in the dataframe that represent each of the light intensities
 intensity_cols = {0: "Light intensity 1%",
                   4: "Light intensity 3%",
                   8: "Light intensity 10%",
@@ -39,14 +39,16 @@ intensity_cols = {0: "Light intensity 1%",
                   44: "Light intensity 100%",
                   }
 
-solar_cell_area = 0.045     # Units cm^2
+solar_cell_area = 0.045     # Area of the solar cell in cm^2
 
 n_colours = 12
-cmap = plt.cm.get_cmap('tab20')  # 20 distinct colors for plotting
+cmap = plt.cm.get_cmap('tab20')  # 20 distinct colours for plotting
 
 fig, ax = plt.subplots()
 
 for key, value in intensity_cols.items():
+
+    # Colour of the line being plotted
     colour = cmap((key / 4) / n_colours)
 
     # Voltage values in Volts (V)
@@ -57,13 +59,15 @@ for key, value in intensity_cols.items():
 
     # Compute J
     current_density_vals = current_vals / solar_cell_area   # Units mA cm^-2
+
+    # Plot the data
     plt.plot(voltage_vals, current_density_vals, color=colour, label=value)
 
-# Center the x-axis and y-axis
+# Centre the axes about the origin
 ax.spines['bottom'].set_position('zero')  # x-axis at y = 0
 ax.spines['left'].set_position('zero')    # y-axis at x = 0
 
-# Ticks only on bottom and left
+# Increments under the x-axis and to the left of y-axis
 ax.xaxis.set_ticks_position('bottom')
 ax.yaxis.set_ticks_position('left')
 
@@ -79,12 +83,12 @@ plt.title(
     )
 plt.legend(fontsize=16)
 
-# Axis increments
+# Axes increments
 x_vals = [((i * 0.05) - 0.5) for i in range(35)]
 plt.xticks(x_vals, fontsize=16)
 plt.yticks(range(-20, 50, 2), fontsize=16)
 
-# Maximize the window
+# Maximise the window
 mng = plt.get_current_fig_manager()
 screen_width = mng.window.winfo_screenwidth()
 screen_height = mng.window.winfo_screenheight()
