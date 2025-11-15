@@ -25,19 +25,27 @@ def read_csv_exception(csv_file_path):
 df = read_csv_exception("CSV Data File.csv")
 
 # Column indexes in the dataframe that represent each of the light intensities
-intensity_cols = {0: "Light intensity 1%",
-                  4: "Light intensity 3%",
-                  8: "Light intensity 10%",
-                  12: "Light intensity 16%",
-                  16: "Light intensity 25%",
-                  20: "Light intensity 32%",
-                  24: "Light intensity 40%",
-                  28: "Light intensity 50%",
-                  32: "Light intensity 63%",
-                  36: "Light intensity 79%",
-                  40: "Light intensity 93%",
-                  44: "Light intensity 100%",
-                  }
+intensity_cols = {
+                    0: "Light intensity 1%",
+                    4: "Light intensity 3%",
+                    8: "Light intensity 10%",
+                    12: "Light intensity 16%",
+                    16: "Light intensity 25%",
+                    20: "Light intensity 32%",
+                    24: "Light intensity 40%",
+                    28: "Light intensity 50%",
+                    32: "Light intensity 63%",
+                    36: "Light intensity 79%",
+                    40: "Light intensity 93%",
+                    44: "Light intensity 100%",
+                }
+
+# Same as above but just for intensities 10%, 50% and 100%
+intensity_10_50_100 = {
+                        8: "Light intensity 10%",
+                        28: "Light intensity 50%",
+                        44: "Light intensity 100%",
+                    }
 
 solar_cell_area = 0.045     # Area of the solar cell in cm^2
 
@@ -46,7 +54,7 @@ cmap = plt.cm.get_cmap('tab20')  # 20 distinct colours for plotting
 
 fig, ax = plt.subplots()
 
-for key, value in intensity_cols.items():
+for key, value in intensity_10_50_100.items():
 
     # Colour of the line being plotted
     colour = cmap((key / 4) / n_colours)
