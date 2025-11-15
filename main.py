@@ -25,7 +25,7 @@ def read_csv_exception(csv_file_path):
 df = read_csv_exception("CSV Data File.csv")
 
 # Column indexes in the dataframe that represent each of the light intensities
-intensity_cols = {
+intensity_all = {
                     0: "Light intensity 1%",
                     4: "Light intensity 3%",
                     8: "Light intensity 10%",
@@ -54,7 +54,10 @@ cmap = plt.cm.get_cmap('tab20')  # 20 distinct colours for plotting
 
 fig, ax = plt.subplots()
 
-for key, value in intensity_10_50_100.items():
+# Modify when needed
+intensities_to_plot = intensity_all
+
+for key, value in intensities_to_plot.items():
 
     # Colour of the line being plotted
     colour = cmap((key / 4) / n_colours)
