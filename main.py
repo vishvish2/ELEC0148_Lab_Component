@@ -66,10 +66,6 @@ def plot_intensities(df, intensities, power=False):
     ax.xaxis.set_label_coords(0, 0)
     ax.yaxis.set_label_coords(0, 0)
 
-    # Labelling the plot
-    plt.xlabel("Voltage / V", fontsize=32)
-    plt.ylabel("Current Density / mAcm$^{-2}$", fontsize=32)
-
     if power:
         plt.title(
             "Power-Voltage curve of Light Intensities of a Perovskite Solar Cell",
@@ -81,19 +77,23 @@ def plot_intensities(df, intensities, power=False):
             fontsize=36
             )
 
-    plt.legend(fontsize=24)
-
     # Axes increments
     x_vals = [((i * 0.05) - 0.5) for i in range(35)]
     plt.xticks(x_vals, fontsize=16)
 
-    # Power values has smaller range
+    # Labelling the plot
+    plt.xlabel("Voltage / V", fontsize=32)
+
     if power:
+        # Power values has smaller range than current density
         y_vals = [((i * 0.1) - 1) for i in range(40)]
         plt.yticks(y_vals, fontsize=20)
+        plt.ylabel("Power / mW", fontsize=32)
     else:
         plt.yticks(range(-26, 50, 2), fontsize=20)
+        plt.ylabel("Current Density / mAcm$^{-2}$", fontsize=32)
 
+    plt.legend(fontsize=24)
     # Maximise the window
     mng = plt.get_current_fig_manager()
     screen_width = mng.window.winfo_screenwidth()
@@ -127,7 +127,7 @@ intensity_10_50_100 = {
                         8: "Light intensity 10%",
                         28: "Light intensity 50%",
                         44: "Light intensity 100%",
-                    }
+                      }
 
 plot_intensities(data_df, intensity_all)
 plot_intensities(data_df, intensity_10_50_100)
