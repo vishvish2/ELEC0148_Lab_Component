@@ -70,7 +70,7 @@ def plot_intensities(df, intensities):
     # Axes increments
     x_vals = [((i * 0.05) - 0.5) for i in range(35)]
     plt.xticks(x_vals, fontsize=16)
-    plt.yticks(range(-20, 50, 2), fontsize=20)
+    plt.yticks(range(-26, 50, 2), fontsize=20)
 
     # Maximise the window
     mng = plt.get_current_fig_manager()
