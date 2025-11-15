@@ -21,7 +21,7 @@ def read_csv_exception(csv_file_path):
         sys.exit()
 
 
-def plot_intensities(df, intensities):
+def plot_intensities(df, intensities, power=False):
 
     solar_cell_area = 0.045     # Area of the solar cell in cm^2
 
@@ -45,7 +45,14 @@ def plot_intensities(df, intensities):
         current_density_vals = current_vals / solar_cell_area   # Units mAcm^-2
 
         # Plot the data
-        plt.plot(voltage_vals, current_density_vals, color=colour, label=value)
+        if power:
+            # P = IV
+            power_vals = voltage_vals * current_vals
+            plt.plot(voltage_vals, power_vals, color=colour, label=value)
+        else:
+            plt.plot(
+                voltage_vals, current_density_vals, color=colour, label=value
+                )
 
     # Centre the axes about the origin
     ax.spines['bottom'].set_position('zero')  # x-axis at y = 0
@@ -70,7 +77,13 @@ def plot_intensities(df, intensities):
     # Axes increments
     x_vals = [((i * 0.05) - 0.5) for i in range(35)]
     plt.xticks(x_vals, fontsize=16)
-    plt.yticks(range(-26, 50, 2), fontsize=20)
+
+    # Power values has smaller range
+    if power:
+        y_vals = [((i * 0.1) - 1) for i in range(40)]
+        plt.yticks(y_vals, fontsize=20)
+    else:
+        plt.yticks(range(-26, 50, 2), fontsize=20)
 
     # Maximise the window
     mng = plt.get_current_fig_manager()
@@ -109,3 +122,5 @@ intensity_10_50_100 = {
 
 plot_intensities(data_df, intensity_all)
 plot_intensities(data_df, intensity_10_50_100)
+plot_intensities(data_df, intensity_all, power=True)
+plot_intensities(data_df, intensity_10_50_100, power=True)
