@@ -79,10 +79,12 @@ plt.title(
     )
 plt.legend(fontsize=16)
 
+# Axis increments
 x_vals = [((i * 0.05) - 0.5) for i in range(35)]
 plt.xticks(x_vals, fontsize=16)
 plt.yticks(range(-20, 50, 2), fontsize=16)
 
+# Maximize the window
 mng = plt.get_current_fig_manager()
 screen_width = mng.window.winfo_screenwidth()
 screen_height = mng.window.winfo_screenheight()
