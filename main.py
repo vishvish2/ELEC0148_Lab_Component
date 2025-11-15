@@ -72,10 +72,13 @@ ax.xaxis.set_label_coords(0, 0)
 ax.yaxis.set_label_coords(0, 0)
 
 # Labelling the plot
-plt.xlabel("Voltage / V", fontsize=16)
-plt.ylabel("Current Density / mAcm$^{-2}$", fontsize=16)
+plt.xlabel("Voltage / V", fontsize=32)
+plt.ylabel("Current Density / mAcm$^{-2}$", fontsize=32)
 plt.title(
-    "JV curve of Light Intensities of a Perovskite Solar Cell", fontsize=18
+    "JV curve of Light Intensities of a Perovskite Solar Cell", fontsize=36
     )
+x_vals = [((i*0.05) - 0.5) for i in range(35)]
 plt.legend(fontsize=16)
+plt.xticks(x_vals, fontsize=16)
+plt.yticks(range(-20, 50, 2), fontsize=16)
 plt.show()
