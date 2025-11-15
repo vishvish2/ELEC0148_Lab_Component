@@ -77,8 +77,15 @@ plt.ylabel("Current Density / mAcm$^{-2}$", fontsize=32)
 plt.title(
     "JV curve of Light Intensities of a Perovskite Solar Cell", fontsize=36
     )
-x_vals = [((i*0.05) - 0.5) for i in range(35)]
 plt.legend(fontsize=16)
+
+x_vals = [((i * 0.05) - 0.5) for i in range(35)]
 plt.xticks(x_vals, fontsize=16)
 plt.yticks(range(-20, 50, 2), fontsize=16)
+
+mng = plt.get_current_fig_manager()
+screen_width = mng.window.winfo_screenwidth()
+screen_height = mng.window.winfo_screenheight()
+mng.window.geometry(f"{screen_width}x{screen_height}+0+0")
+
 plt.show()
