@@ -69,9 +69,18 @@ def plot_intensities(df, intensities, power=False):
     # Labelling the plot
     plt.xlabel("Voltage / V", fontsize=32)
     plt.ylabel("Current Density / mAcm$^{-2}$", fontsize=32)
-    plt.title(
-        "JV curve of Light Intensities of a Perovskite Solar Cell", fontsize=36
-        )
+
+    if power:
+        plt.title(
+            "Power-Voltage curve of Light Intensities of a Perovskite Solar Cell",
+            fontsize=36
+            )
+    else:
+        plt.title(
+            "JV curve of Light Intensities of a Perovskite Solar Cell",
+            fontsize=36
+            )
+
     plt.legend(fontsize=24)
 
     # Axes increments
