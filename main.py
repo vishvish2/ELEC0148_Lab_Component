@@ -68,7 +68,7 @@ def plot_intensities(df, intensities, power=False):
 
     if power:
         plt.title(
-            "Power-Voltage curve of Light Intensities of a Perovskite Solar Cell",
+            "Power-Voltage plot of Light Intensities of Perovskite Solar Cell",
             fontsize=36
             )
     else:
@@ -86,7 +86,7 @@ def plot_intensities(df, intensities, power=False):
 
     if power:
         # Power values has smaller range than current density
-        y_vals = [((i * 0.1) - 1) for i in range(40)]
+        y_vals = [((i * 0.1) - 1) for i in range(37)]
         plt.yticks(y_vals, fontsize=20)
         plt.ylabel("Power / mW", fontsize=32)
     else:
@@ -129,6 +129,7 @@ intensity_10_50_100 = {
                         44: "Light intensity 100%",
                       }
 
+# Plots
 plot_intensities(data_df, intensity_all)
 plot_intensities(data_df, intensity_10_50_100)
 plot_intensities(data_df, intensity_all, power=True)
