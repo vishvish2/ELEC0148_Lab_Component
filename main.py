@@ -94,13 +94,14 @@ def plot_intensities(df, intensities, power=False):
         plt.ylabel("Current Density / mAcm$^{-2}$", fontsize=32)
 
     plt.legend(fontsize=24)
+
     # Maximise the window
     mng = plt.get_current_fig_manager()
     screen_width = mng.window.winfo_screenwidth()
     screen_height = mng.window.winfo_screenheight()
     mng.window.geometry(f"{screen_width}x{screen_height}+0+0")
 
-    plt.show()
+    # plt.show()
 
 
 # Pandas dataframe for the csv file data
@@ -136,3 +137,5 @@ plot_intensities(data_df, intensity_10_50_100)
 # Power-Voltage plots
 plot_intensities(data_df, intensity_all, power=True)
 plot_intensities(data_df, intensity_10_50_100, power=True)
+
+plt.show()
