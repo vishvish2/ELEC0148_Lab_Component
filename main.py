@@ -23,10 +23,10 @@ def read_csv_exception(csv_file_path):
 
 def plot_intensities(df, intensities, power=False):
 
-    solar_cell_area = 0.045     # Area of the solar cell in cm^2
+    solar_cell_area = 0.045                 # Area of the solar cell in cm^2
 
     n_colours = 12
-    cmap = plt.cm.get_cmap('tab20')  # 20 distinct colours for plotting
+    cmap = plt.cm.get_cmap('tab20')         # 20 distinct colours for plotting
 
     _, ax = plt.subplots()
 
@@ -129,8 +129,10 @@ intensity_10_50_100 = {
                         44: "Light intensity 100%",
                       }
 
-# Plots
+# JV Plots
 plot_intensities(data_df, intensity_all)
 plot_intensities(data_df, intensity_10_50_100)
+
+# Power-Voltage plots
 plot_intensities(data_df, intensity_all, power=True)
 plot_intensities(data_df, intensity_10_50_100, power=True)
