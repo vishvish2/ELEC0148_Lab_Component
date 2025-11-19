@@ -134,8 +134,7 @@ intensity_10_50_100 = {
 plot_intensities(data_df, intensity_all)
 plot_intensities(data_df, intensity_10_50_100)
 
-# Power-Voltage plots
-plot_intensities(data_df, intensity_all, power=True)
+# Power-Voltage plot
 plot_intensities(data_df, intensity_10_50_100, power=True)
 
 plt.show()
