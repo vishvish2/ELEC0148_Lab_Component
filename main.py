@@ -83,15 +83,6 @@ def plot_intensities(df, area, intensities, power=False, MPP=None):
         plt.yticks(y_vals, fontsize=20)
         plt.ylabel("Power / mW", fontsize=32)
 
-        # Plotting the Maximum Power Point
-        if MPP:
-            for key, item in MPP.items():
-                MPP_y = item[1] * item[0]   # Power = Current * Voltage
-                plt.plot(item[0], MPP_y, marker="x", markersize=25,
-                         markeredgewidth=2)
-                plt.text(item[0], (MPP_y - 0.15), f"MPP {key}%", fontsize=30,
-                         ha="left", va="bottom")
-
     else:
         # JV plot
         plt.title(
@@ -103,14 +94,31 @@ def plot_intensities(df, area, intensities, power=False, MPP=None):
         plt.yticks(range(-26, 50, 2), fontsize=20)
         plt.ylabel("Current Density / mAcm$^{-2}$", fontsize=32)
 
-        # Plotting the Maximum Power Point
-        if MPP:
-            for key, item in MPP.items():
+    # Plotting the Maximum Power Point (MPP)
+    if MPP:
+        for key, item in MPP.items():
+            if power:
+                MPP_y = item[1] * item[0]   # Power = Current * Voltage
+                offset = 0.15
+            else:
                 MPP_y = item[1] / area  # Current density = Current / Area
-                plt.plot(item[0], MPP_y, marker="x", markersize=25,
-                         markeredgewidth=2)
-                plt.text(item[0], (MPP_y - 3), f"MPP {key}%", fontsize=30,
-                         ha="left", va="bottom")
+                offset = 3
+
+            # Plotting the MPP as X marker
+            plt.plot(item[0], MPP_y, marker="x", markersize=25,
+                     markeredgewidth=2)
+
+            # Horizontal dashed line (from x=0 to x coordinate of MPP)
+            ax.plot([0, item[0]], [MPP_y, MPP_y], linestyle="--",
+                    linewidth=1)
+
+            # Vertical dashed line (from y coordinate of MPP to y=0)
+            ax.plot([item[0], item[0]], [0, MPP_y], linestyle="--",
+                    linewidth=1)
+
+            # Labelling the MPP
+            plt.text(item[0], (MPP_y - offset), f"MPP {key}%", fontsize=30,
+                     ha="left", va="bottom")
 
     # Legend for the plots of different intensities
     plt.legend(fontsize=24)
