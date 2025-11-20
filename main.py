@@ -21,7 +21,7 @@ def read_csv_exception(csv_file_path):
         sys.exit()
 
 
-def plot_intensities(df, area, intensities, power=False):
+def plot_intensities(df, area, intensities, power=False, MPP=None):
 
     n_colours = 12
     cmap = plt.cm.get_cmap('tab20')         # 20 distinct colours for plotting
@@ -64,17 +64,6 @@ def plot_intensities(df, area, intensities, power=False):
     ax.xaxis.set_label_coords(0, 0)
     ax.yaxis.set_label_coords(0, 0)
 
-    if power:
-        plt.title(
-            "Power-Voltage plot of Light Intensities of Perovskite Solar Cell",
-            fontsize=36
-            )
-    else:
-        plt.title(
-            "JV curve of Light Intensities of a Perovskite Solar Cell",
-            fontsize=36
-            )
-
     # Axes increments
     x_vals = [((i * 0.05) - 0.5) for i in range(35)]
     plt.xticks(x_vals, fontsize=16)
@@ -83,14 +72,47 @@ def plot_intensities(df, area, intensities, power=False):
     plt.xlabel("Voltage / V", fontsize=32)
 
     if power:
+        # Power-Voltage plot
+        plt.title(
+            "Power-Voltage plot of Light Intensities of Perovskite Solar Cell",
+            fontsize=36
+            )
+
         # Power values has smaller range than current density
         y_vals = [((i * 0.1) - 1) for i in range(37)]
         plt.yticks(y_vals, fontsize=20)
         plt.ylabel("Power / mW", fontsize=32)
+
+        # Plotting the Maximum Power Point
+        if MPP:
+            for key, item in MPP.items():
+                MPP_y = item[1] * item[0]   # Power = Current * Voltage
+                plt.plot(item[0], MPP_y, marker="x", markersize=25,
+                         markeredgewidth=2)
+                plt.text(item[0], (MPP_y - 0.15), f"MPP {key}%", fontsize=30,
+                         ha="left", va="bottom")
+
     else:
+        # JV plot
+        plt.title(
+            "JV curve of Light Intensities of a Perovskite Solar Cell",
+            fontsize=36
+            )
+
+        # Current density has larger range than power values
         plt.yticks(range(-26, 50, 2), fontsize=20)
         plt.ylabel("Current Density / mAcm$^{-2}$", fontsize=32)
 
+        # Plotting the Maximum Power Point
+        if MPP:
+            for key, item in MPP.items():
+                MPP_y = item[1] / area  # Current density = Current / Area
+                plt.plot(item[0], MPP_y, marker="x", markersize=25,
+                         markeredgewidth=2)
+                plt.text(item[0], (MPP_y - 3), f"MPP {key}%", fontsize=30,
+                         ha="left", va="bottom")
+
+    # Legend for the plots of different intensities
     plt.legend(fontsize=24)
 
     # Maximise the window
@@ -140,14 +162,12 @@ solar_cell_area = 0.045
 
 # JV Plots
 plot_intensities(data_df, solar_cell_area, intensity_all)
-plot_intensities(data_df, solar_cell_area, intensity_10_50_100)
+plot_intensities(data_df, solar_cell_area, intensity_10_50_100,
+                 MPP=max_power_points)
 
 # Power-Voltage plot
-plot_intensities(data_df, solar_cell_area, intensity_10_50_100, power=True)
-for key, item in max_power_points.items():
-    plt.plot(item[0], (item[1] * item[0]), marker="x", markersize=25,
-             markeredgewidth=2)
-    plt.text(item[0], ((item[1] * item[0]) - 0.15), f"MPP {key}%", fontsize=30,
-             ha="left", va="bottom")
+plot_intensities(data_df, solar_cell_area, intensity_10_50_100, power=True,
+                 MPP=max_power_points)
+
 
 plt.show()
