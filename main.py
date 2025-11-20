@@ -21,9 +21,7 @@ def read_csv_exception(csv_file_path):
         sys.exit()
 
 
-def plot_intensities(df, intensities, power=False):
-
-    solar_cell_area = 0.045                 # Area of the solar cell in cm^2
+def plot_intensities(df, area, intensities, power=False):
 
     n_colours = 12
     cmap = plt.cm.get_cmap('tab20')         # 20 distinct colours for plotting
@@ -42,7 +40,7 @@ def plot_intensities(df, intensities, power=False):
         current_vals = pd.to_numeric(df.iloc[:, (key + 1)][1:]) * 1000
 
         # Compute J
-        current_density_vals = current_vals / solar_cell_area   # Units mAcm^-2
+        current_density_vals = current_vals / area   # Units mAcm^-2
 
         # Plot the data
         if power:
@@ -130,11 +128,24 @@ intensity_10_50_100 = {
                         44: "Light intensity 100%",
                       }
 
+# Maximum Power Point for 10%, 50% and 100%
+MPPs = {
+            10: [0.85, -0.11],
+            50: [0.89, -0.51],
+            100: [0.89, -0.97]
+}
+
+# Area of solar cell in cm^2
+solar_cell_area = 0.045
+
 # JV Plots
-plot_intensities(data_df, intensity_all)
-plot_intensities(data_df, intensity_10_50_100)
+plot_intensities(data_df, solar_cell_area, intensity_all)
+plot_intensities(data_df, solar_cell_area, intensity_10_50_100)
 
 # Power-Voltage plot
-plot_intensities(data_df, intensity_10_50_100, power=True)
+plot_intensities(data_df, solar_cell_area, intensity_10_50_100, power=True)
+for key, item in MPPs.items():
+    plt.plot(item[0], (item[1] * item[0]), marker="x", markersize=25, markeredgewidth=2)
+    plt.text(item[0], ((item[1] * item[0]) - 0.15), f"MPP {key}%", fontsize=30, ha="left", va="bottom")
 
 plt.show()
