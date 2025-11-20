@@ -129,7 +129,7 @@ intensity_10_50_100 = {
                       }
 
 # Maximum Power Point for 10%, 50% and 100%
-MPPs = {
+max_power_points = {
             10: [0.85, -0.11],
             50: [0.89, -0.51],
             100: [0.89, -0.97]
@@ -144,8 +144,10 @@ plot_intensities(data_df, solar_cell_area, intensity_10_50_100)
 
 # Power-Voltage plot
 plot_intensities(data_df, solar_cell_area, intensity_10_50_100, power=True)
-for key, item in MPPs.items():
-    plt.plot(item[0], (item[1] * item[0]), marker="x", markersize=25, markeredgewidth=2)
-    plt.text(item[0], ((item[1] * item[0]) - 0.15), f"MPP {key}%", fontsize=30, ha="left", va="bottom")
+for key, item in max_power_points.items():
+    plt.plot(item[0], (item[1] * item[0]), marker="x", markersize=25,
+             markeredgewidth=2)
+    plt.text(item[0], ((item[1] * item[0]) - 0.15), f"MPP {key}%", fontsize=30,
+             ha="left", va="bottom")
 
 plt.show()
