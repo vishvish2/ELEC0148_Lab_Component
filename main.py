@@ -177,5 +177,4 @@ plot_intensities(data_df, solar_cell_area, intensity_10_50_100,
 plot_intensities(data_df, solar_cell_area, intensity_10_50_100, power=True,
                  MPP=max_power_points)
 
-
 plt.show()
