@@ -5,14 +5,6 @@ import matplotlib.pyplot as plt
 
 
 def read_csv_exception(csv_file_path):
-    """Convert a csv file to a pandas dataframe with exception handling
-
-        Args:
-            df_file_path (str): file path to csv file
-
-        Returns:
-            df (DataFrame): pandas dataframe
-    """
     try:
         df = pd.read_csv(csv_file_path)
         return df
